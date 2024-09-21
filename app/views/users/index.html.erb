@@ -1,0 +1,6 @@
+<h1>Current User</h1>
+<% if @user %>
+  <p>Name: <%= @user.name %></p>
+<% else %>
+  <p>No user is logged in.</p>
+<% end %>
