@@ -6,4 +6,9 @@ Rails.application.routes.draw do
       post :create
     end
   end
+  resources :payouts do
+    collection do
+      post :create
+    end
+  end
 end
