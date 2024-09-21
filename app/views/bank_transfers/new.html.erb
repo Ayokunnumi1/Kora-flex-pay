@@ -1,0 +1,31 @@
+<h1>New Bank Transfer</h1>
+<%= form_with model: @bank_transfer, local: true do |form| %>
+  <div>
+    <%= form.label :account_name %>
+    <%= form.text_field :account_name %>
+  </div>
+  <div>
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div>
+  <div>
+    <%= form.label :currency %>
+    <%= form.text_field :currency, value: 'NGN' %>
+  </div>
+  <div>
+    <%= form.label :reference %>
+    <%= form.text_field :reference %>
+  </div>
+  <!-- Customer Information -->
+  <div>
+    <%= form.label :customer_name, "Customer Name" %>
+    <%= form.text_field :customer_name %>
+  </div>
+  <div>
+    <%= form.label :customer_email, "Customer Email" %>
+    <%= form.email_field :customer_email %>
+  </div>
+  <div>
+    <%= form.submit "Create Bank Transfer" %>
+  </div>
+<% end %>

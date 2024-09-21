@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_21_155747) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_21_190903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bank_transfers", force: :cascade do |t|
+    t.string "account_name"
+    t.decimal "amount"
+    t.string "currency"
+    t.string "reference"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "customer_name"
+    t.string "customer_email"
+    t.index ["user_id"], name: "index_bank_transfers_on_user_id"
+  end
+
+  create_table "payouts", force: :cascade do |t|
+    t.string "reference"
+    t.decimal "amount"
+    t.string "currency"
+    t.string "bank_code"
+    t.string "account_number"
+    t.text "narration"
+    t.string "customer_name"
+    t.string "customer_email"
+    t.string "status"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payouts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -22,4 +51,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_155747) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "bank_transfers", "users"
+  add_foreign_key "payouts", "users"
 end
