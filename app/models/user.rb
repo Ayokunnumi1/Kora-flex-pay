@@ -2,6 +2,7 @@ class User < ApplicationRecord
   include HTTParty
   has_many :bank_transfers
   has_many :payouts
+  has_many :mobile_money_transactions
 
   base_uri 'https://api.korapay.com/merchant/api/v1'
 
