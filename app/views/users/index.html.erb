@@ -1,2 +1,116 @@
+<h1>Current User</h1>
+<% if @user %>
+  <p>Name: <%= @user.name %></p>
+<% else %>
+  <p>No user is logged in.</p>
+<% end %>
+<h1>User Index</h1>
+<table style="border: 1px solid #ddd; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Pending Balance</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Available Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ddd; padding: 8px;"><%= @user.name %></td>
+      <td style="border: 1px solid #ddd; padding: 8px;"><%= @user_balance[:pending_balance] || 'N/A' %></td>
+      <td style="border: 1px solid #ddd; padding: 8px;"><%= @user_balance[:available_balance] || 'N/A' %></td>
+    </tr>
+  </tbody>
+</table>
+<% if @user_balance[:error] %>
+  <p style="color: red;">Error: <%= @user_balance[:error] %></p>
+<% end %>
+<%= link_to 'New Bank Transfer', new_bank_transfer_path, class: 'btn btn-primary', style: 'margin-top: 20px;' %>
+<%= link_to 'New Payout', new_payout_path, class: 'btn btn-primary', style: 'margin-top: 20px; margin-left: 30px' %>
+<%= link_to 'New Mobile Money', new_mobile_money_transaction_path, class: 'btn btn-primary', style: 'margin-top: 20px; margin-left: 30px' %>
+
+<h2>Bank Transfers</h2>
+<table style="border: 1px solid #ddd; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Account Name</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Amount</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Currency</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Reference</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Customer Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bank_transfers.each do |transfer| %>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.customer_name %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.account_name %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.amount %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.currency %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.reference %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= transfer.customer_email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h2>My Payouts</h2>
+<table style="border: 1px solid #ddd; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Amount</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Currency</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Bank Code</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Account Number</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Narration</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Customer Email</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payouts.each do |payout| %>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.customer_name %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= number_to_currency(payout.amount, unit: payout.currency) %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.currency %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.bank_code %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.account_number %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.narration %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.customer_email %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= payout.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Mobile Money Transactions</h1>
+
+<% if @mobile_money_transaction.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>Customer Name</th>
+        <th>Customer Email</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @mobile_money_transaction.each do |transaction| %>
+        <tr>
+          <td><%= number_to_currency(transaction.amount / 100.0, unit: '') %></td>
+          <td><%= transaction.currency %></td>
+          <td><%= transaction.customer_name %></td>
+          <td><%= transaction.customer_email %></td>
+          <td><%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No mobile money transactions found.</p>
+<% end %>
+
 <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to sign out?' }, class: 'btn btn-danger' %>
 <h1>Hi I am a POS agent</h1>

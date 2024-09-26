@@ -1,0 +1,26 @@
+<h1>Initialize Payment</h1>
+
+<%= form_with model: @mobile_money_transaction, local: true do |f| %>
+  <div>
+    <%= f.label :amount, "Amount" %>
+    <%= f.number_field :amount, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :currency, "Currency" %>
+    <%= f.select :currency, options_for_select([["GHS", "GHS"]], "GHS"), required: true %>
+
+  </div>
+
+  <div>
+    <%= f.label :customer_name, "Customer Name" %>
+    <%= f.text_field :customer_name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :customer_email, "Customer Email" %>
+    <%= f.email_field :customer_email, required: true %>
+  </div>
+
+  <%= f.submit "Submit Payment" %>
+<% end %>

@@ -1,6 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  name: MyString
+  kora_api_pk: MyString
+  kora_api_sk: MyString
+
+two:
+  name: MyString
+  kora_api_pk: MyString
+  kora_api_sk: MyString
   first_name: MyString
   last_name: MyString
   bank_name: MyString
@@ -17,3 +25,4 @@ two:
   account_number: MyString
   phone_number: MyString
   unique_identifier: MyString
+

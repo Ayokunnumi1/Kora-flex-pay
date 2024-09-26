@@ -1,0 +1,38 @@
+<h1>New Payout</h1>
+<%= form_with model: @payout, local: true do |form| %> <!-- local: true for non-Turbo form submission -->
+  <div class="form-group">
+    <%= form.label :reference, 'Reference (Unique Transaction Reference)' %>
+    <%= form.text_field :reference, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :amount, 'Amount' %>
+    <%= form.number_field :amount, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :currency, 'Currency (e.g., NGN)' %>
+    <%= form.text_field :currency, value: 'NGN', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :bank_code, 'Bank Code (e.g., 033 for UBA)' %>
+    <%= form.text_field :bank_code, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :account_number, 'Recipient Account Number' %>
+    <%= form.text_field :account_number, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :narration, 'Narration (Optional)' %>
+    <%= form.text_area :narration, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :customer_name, 'Customer Name' %>
+    <%= form.text_field :customer_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :customer_email, 'Customer Email' %>
+    <%= form.text_field :customer_email, class: 'form-control' %>
+  </div>
+  <div>
+    <%= form.submit 'Initiate Payout', class: 'btn btn-primary' %>
+  </div>
+<% end %>
