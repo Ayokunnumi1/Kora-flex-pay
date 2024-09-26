@@ -5,4 +5,9 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :payouts
+
+  def fetch_balance
+    service = KoraBalanceApi.new
+    service.fetch_balance
+  end
 end
