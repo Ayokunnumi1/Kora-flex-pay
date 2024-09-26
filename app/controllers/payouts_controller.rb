@@ -17,7 +17,7 @@ class PayoutsController < ApplicationController
     @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
 
     if @payout.save
-      redirect_to edit_payout_path(@payout), notice: 'Payout was successfully created. You can now process it.'
+      redirect_to users_path(@payout), notice: 'Payout was successfully created.'
     else
       flash.now[:alert] = 'Failed to create payout.'
       render :new
@@ -30,7 +30,7 @@ class PayoutsController < ApplicationController
 
   def update
     if create_payout_api(@payout)
-      redirect_to users_path, notice: 'Payout was successfully processed.'
+      redirect_to admins_index_path, notice: 'Payout was successfully processed.'
     else
       flash.now[:alert] = 'Failed to create payout via API'
       render :edit
@@ -60,7 +60,7 @@ class PayoutsController < ApplicationController
 
   def build_headers
     {
-      'Authorization' => "Bearer #{current_user.kora_api_sk}",
+      'Authorization' => "Bearer #{ENV['API_KEY']}",
       'Content-Type' => 'application/json'
     }
   end
@@ -86,10 +86,18 @@ class PayoutsController < ApplicationController
   end
 
   def successful_response?(response)
-    response.code == 200 && response.parsed_response['status']
+    if response.code == 200 && response.parsed_response['status']
+      true
+    else
+      Rails.logger.error("API Error: #{response.body}")
+      false
+    end
   end
 
   def generate_reference
-    # Implement your logic to generate a unique reference here
+    unique_code = SecureRandom.hex(4)
+    timestamp = Time.now.to_i
+    "unique-reference-#{timestamp}#{unique_code}"
   end
+
 end

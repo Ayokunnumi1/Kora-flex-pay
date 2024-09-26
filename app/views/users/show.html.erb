@@ -23,10 +23,18 @@
       <% @payouts.each do |payout| %>
         <tr>
           <td><%= payout.reference %></td>
-          <td><%= number_to_currency(payout.amount, unit: payout.currency) %></td>
+          <td>
+            <% if payout.currency.present? %>
+              <%= number_to_currency(payout.amount, unit: payout.currency) %>
+            <% else %>
+              <%= payout.amount %> <!-- Just display the amount without currency formatting -->
+            <% end %>
+          </td>
           <td><%= payout.currency %></td>
           <td><%= payout.status %></td>
           <td><%= payout.created_at.strftime("%d %b %Y") %></td>
+          <td><%= link_to 'Update Payout', edit_payout_path(payout), class: 'btn btn-primary' %>
+          </td>
         </tr>
       <% end %>
     </tbody>

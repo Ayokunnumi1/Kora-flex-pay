@@ -1,45 +1,33 @@
-<h1>Create Payout</h1>
-<p><strong>User Details:</strong></p>
-<table>
-  <tr>
-    <th>First Name</th>
-    <td><%= @payout.user.first_name %></td>
-  </tr>
-  <tr>
-    <th>Last Name</th>
-    <td><%= @payout.user.last_name %></td>
-  </tr>
-  <tr>
-    <th>Email</th>
-    <td><%= @payout.user.email %></td>
-  </tr>
-  <tr>
-    <th>Bank Name</th>
-    <td><%= @payout.user.bank_name %></td>
-  </tr>
-  <tr>
-    <th>Account Number</th>
-    <td><%= @payout.user.account_number %></td>
-  </tr>
-  <tr>
-    <th>Customer Name</th>
-    <td><%= @payout.customer_name %></td>
-  </tr>
-  <tr>
-    <th>Customer Email</th>
-    <td><%= @payout.customer_email %></td>
-  </tr>
-</table>
-<%= form_with model: @payout, local: true do |form| %>
-  <div>
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: '0.01', required: true %> <!-- User inputs amount here -->
+<%= form_with model: @payout, local: true do |f| %>
+  <!-- Reference Field (Hidden) -->
+  <%= f.hidden_field :reference %>
+  <!-- Currency Field (Hidden) -->
+  <%= f.hidden_field :currency %>
+  <div class="field">
+    <%= f.label :bank_code %>
+    <%= f.text_field :bank_code, readonly: true %>
+  </div>
+  <div class="field">
+    <%= f.label :account_number %>
+    <%= f.text_field :account_number, readonly: true %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_name %>
+    <%= f.text_field :customer_name, readonly: true %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_email %>
+    <%= f.text_field :customer_email, readonly: true %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %>
+    <%= f.number_field :amount %>
   </div>
   <div>
-    <%= form.label :narration %>
-    <%= form.text_area :narration, required: true %> <!-- Allow admin to input narration -->
+    <%= f.label :narration %>
+    <%= f.text_area :narration, required: true %>
   </div>
-  <div>
-    <%= form.submit 'Create Payout' %>
+  <div class="actions">
+    <%= f.submit "Create Payout" %>
   </div>
 <% end %>
