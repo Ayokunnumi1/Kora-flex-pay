@@ -1,2 +1,22 @@
-<h1>Admins#index</h1>
-<p>Find me in app/views/admins/index.html.erb</p>
+<h1>Users and Their Mobile Money Transactions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Number of Mobile Money Transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users_with_mobile_money_count.each do |user| %>
+      <tr>
+        <td><%= user.first_name %> <%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone_number %></td>
+        <td><%= user.transactions_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

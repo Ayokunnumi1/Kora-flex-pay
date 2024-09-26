@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_26_080934) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_26_115219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_080934) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "admin_id", null: false
+    t.index ["admin_id"], name: "index_payouts_on_admin_id"
     t.index ["user_id"], name: "index_payouts_on_user_id"
   end
 
@@ -87,5 +89,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_080934) do
   end
 
   add_foreign_key "bank_transfers", "users"
+  add_foreign_key "payouts", "admins"
   add_foreign_key "payouts", "users"
 end

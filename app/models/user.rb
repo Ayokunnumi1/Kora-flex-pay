@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # include HTTParty
   has_many :bank_transfers
-  has_many :payouts
   has_many :mobile_money_transactions
 
   # Include default devise modules. Others available are:
