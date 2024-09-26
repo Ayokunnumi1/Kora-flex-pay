@@ -1,45 +1,88 @@
-<div>
-  <%= image_tag("./images/logo.png", alt: "Logo") %>
-  <h2>Flex Pay</h2>
-</div>
-<% if @user %>
-  <h2>Welcome <%= @user.first_name %></h2>
-<% else %>
-  <p>No user is logged in.</p>
-<% end %>
+<main class="user-dashboard-container">
+  <section>
+    <div class="navbar">
+      <div class="logo">
+        <%= image_tag("logo.png", size: "30x30", alt: "Logo") %>
+        <h2>Flex Pay</h2>
+      </div>
+      <div class="user-pic">
+        <% if @user %>
+          <p>Welcome, <%= @user.first_name %>!</p>
+        <% else %>
+          <p>No user logged in</p>
+        <% end %>
+        <%= image_tag("photo.png", size: "40x40", alt: "User", style: "border-radius: 50%;") %>
+      </div>
+    </div>
 
-<p>Be a POS Agent, set up kyc<p>
-<%= link_to 'Mobile Money', new_mobile_money_transaction_path, class: 'btn btn-primary', style: 'margin-top: 20px; margin-left: 30px' %>
+    <section class="dashboard-container">
+      <!-- First section - icons for navigation -->
+      <section class="first-section">
+        <div class="icon-grid">
+          <div class="icon">
+            <%= image_tag("home.png", size: "30x30", alt: "Home Icon") %>
+            <p>Home</p>
+          </div>
+          <div class="icon">
+            <%= image_tag("kyc.png", size: "30x30", alt: "KYC Icon") %>
+            <p>Set up KYC</p>
+          </div>
+          <div class="icon">
+            <%= image_tag("customer.png", size: "30x30", alt: "Customers Icon") %>
+            <p>Customers</p>
+          </div>
+          <div class="icon">
+            <%= image_tag("income.png", size: "30x30", alt: "Income Icon") %>
+            <p>Income</p>
+          </div>
+          <div class="icon logout">
+            <%= image_tag("logout.png", size: "30x30", alt: "Logout Icon") %>
+            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'logout-btn' %>
+          </div>
 
+          
+          <div class="icon logout">
+            <%= image_tag("money.png", size: "30x30", alt: "Logout Icon") %>
+            <%= link_to 'Mobile Money', new_mobile_money_transaction_path, class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </section>
 
-<h3>Mobile Money Transactions</h3>
+      <!-- Second section - main dashboard content -->
+      <section class="second-section">
+        <div class="second-section-header">
+          <h4>Dashboard</h4>
+        </div>
 
-<% if @mobile_money_transaction.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Amount</th>
-        <th>Currency</th>
-        <th>Customer Name</th>
-        <th>Customer Email</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @mobile_money_transaction.each do |transaction| %>
-        <tr>
-          <td><%= number_to_currency(transaction.amount / 100.0, unit: '') %></td>
-          <td><%= transaction.currency %></td>
-          <td><%= transaction.customer_name %></td>
-          <td><%= transaction.customer_email %></td>
-          <td><%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No mobile money transactions found.</p>
-<% end %>
+        <!-- Summary cards for totals -->
+        <div class="summary-cards">
+          <div class="summary-card">
+            <h3>Total Amount Collected</h3>
+            <p class="amount">$<%= number_to_currency(@total_amount, unit: '') %></p>
+          </div>
+          <div class="summary-card">
+            <h3>Total Customers</h3>
+            <p class="total-customers"><%= @total_customers %></p>
+          </div>
+        </div>
 
-<%= button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to sign out?' }, class: 'btn btn-danger' %>
-<h1>Hi I am a POS agent</h1>
+        <!-- Transactions section -->
+        <div class="transactions-list">
+          <h3>Recent Mobile Money Transactions</h3> 
+          <% if @mobile_money_transaction.any? %>
+            <% @mobile_money_transaction.each do |transaction| %>
+              <div class="transaction-card">
+                <p><strong>Amount:</strong> $<%= number_to_currency(transaction.amount / 100.0, unit: '') %></p>
+                <p><strong>Customer:</strong> <%= transaction.customer_name %></p>
+                <p><strong>Email:</strong> <%= transaction.customer_email %></p>
+                <p><strong>Date:</strong> <%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No mobile money transactions found.</p>
+          <% end %>
+        </div>
+      </section>
+    </section>
+  </section>
+</main>
