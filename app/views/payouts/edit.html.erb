@@ -1,0 +1,41 @@
+<h1>Edit Payout</h1>
+<p>Confirm the payout details below and click "Process Payout" to initiate the transaction:</p>
+<table>
+  <tr>
+    <th>Reference</th>
+    <td><%= @payout.reference %></td>
+  </tr>
+  <tr>
+    <th>Amount</th>
+    <td><%= @payout.amount %></td>
+  </tr>
+  <tr>
+    <th>Currency</th>
+    <td><%= @payout.currency %></td>
+  </tr>
+  <tr>
+    <th>Bank Code</th>
+    <td><%= @payout.bank_code %></td>
+  </tr>
+  <tr>
+    <th>Account Number</th>
+    <td><%= @payout.account_number %></td>
+  </tr>
+  <tr>
+    <th>Narration</th>
+    <td><%= @payout.narration %></td>
+  </tr>
+  <tr>
+    <th>Customer Name</th>
+    <td><%= @payout.customer_name %></td>
+  </tr>
+  <tr>
+    <th>Customer Email</th>
+    <td><%= @payout.customer_email %></td>
+  </tr>
+</table>
+<%= form_with model: @payout, url: payout_path(@payout), method: :patch do |form| %>
+  <div>
+    <%= form.submit 'Process Payout' %>
+  </div>
+<% end %>

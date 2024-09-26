@@ -1,21 +1,47 @@
 class PayoutsController < ApplicationController
+  before_action :set_payout, only: [:edit, :update]
+
   def new
-    @payout = current_user.payouts.new
+    @payout = current_user.payouts.new(
+      reference: generate_reference, # Assuming you have a method to generate a unique reference
+      currency: 'NGN', # Default currency
+      bank_code: current_user.bank_code, # Autofill from user data
+      account_number: current_user.account_number, # Autofill from user data
+      customer_name: current_user.first_name + ' ' + current_user.last_name, # Autofill from user data
+      customer_email: current_user.email # Autofill from user data
+    )
   end
 
   def create
     @payout = current_user.payouts.new(payout_params)
+    @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
 
-    if create_payout_api(@payout)
-      @payout.save
-      redirect_to users_path, notice: 'Payout was successfully created.'
+    if @payout.save
+      redirect_to edit_payout_path(@payout), notice: 'Payout was successfully created. You can now process it.'
     else
-      flash.now[:alert] = 'Failed to create payout via API'
+      flash.now[:alert] = 'Failed to create payout.'
       render :new
     end
   end
 
+  def edit
+    # @payout is set by the before_action
+  end
+
+  def update
+    if create_payout_api(@payout)
+      redirect_to users_path, notice: 'Payout was successfully processed.'
+    else
+      flash.now[:alert] = 'Failed to create payout via API'
+      render :edit
+    end
+  end
+
   private
+
+  def set_payout
+    @payout = Payout.find(params[:id])
+  end
 
   def payout_params
     params.require(:payout).permit(:reference, :amount, :currency, :bank_code, :account_number, :narration,
@@ -61,5 +87,9 @@ class PayoutsController < ApplicationController
 
   def successful_response?(response)
     response.code == 200 && response.parsed_response['status']
+  end
+
+  def generate_reference
+    # Implement your logic to generate a unique reference here
   end
 end

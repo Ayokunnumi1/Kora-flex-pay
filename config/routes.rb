@@ -18,8 +18,10 @@ Rails.application.routes.draw do
   end
 
   resources :payouts do
-    collection do
-      post :create
+    member do
+      get :edit
+      patch :update
     end
   end
+
 end
