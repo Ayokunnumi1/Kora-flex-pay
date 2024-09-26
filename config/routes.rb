@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  
+  devise_for :admins, skip: [:registrations]
   get 'mobile_money_transactions/create'
   # get 'mobile_money/create'
   devise_for :users
   root 'users#index'
+  get 'admins/index'
 
   get '/payment_success', to: 'payments#success', as: 'payment_success'
   resources :users, only: [:index]
