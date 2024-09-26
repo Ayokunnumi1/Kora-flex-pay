@@ -63,4 +63,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_25_053327) do
 
   add_foreign_key "bank_transfers", "users"
   add_foreign_key "payouts", "users"
+  
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_165454) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "bank_name"
+    t.string "bank_code"
+    t.string "account_number"
+    t.string "phone_number"
+    t.string "unique_identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unique_identifier"], name: "index_users_on_unique_identifier", unique: true
+  end
+
 end

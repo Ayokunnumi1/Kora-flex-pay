@@ -17,4 +17,10 @@ Rails.application.routes.draw do
       post :create
     end
   end
+  
+  devise_for :users
+
+  root to: 'users#index'
+
+  resources :users
 end
