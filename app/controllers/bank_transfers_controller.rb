@@ -23,15 +23,28 @@ class BankTransfersController < ApplicationController
   end
 
   def create_bank_transfer_api(bank_transfer)
-    # Define the API endpoint and headers
-    url = 'https://api.korapay.com/merchant/api/v1/charges/bank-transfer'
-    headers = {
+    response = HTTParty.post(
+      api_url,
+      headers: api_headers,
+      body: api_payload(bank_transfer)
+    )
+
+    successful_response?(response)
+  end
+
+  def api_url
+    'https://api.korapay.com/merchant/api/v1/charges/bank-transfer'
+  end
+
+  def api_headers
+    {
       'Authorization' => "Bearer #{current_user.kora_api_sk}",
       'Content-Type' => 'application/json'
     }
+  end
 
-    # Define the payload
-    payload = {
+  def api_payload(bank_transfer)
+    {
       account_name: bank_transfer.account_name,
       amount: bank_transfer.amount,
       currency: bank_transfer.currency,
@@ -41,15 +54,9 @@ class BankTransfersController < ApplicationController
         email: bank_transfer.customer_email
       }
     }.to_json
+  end
 
-    # Make the API request
-    response = HTTParty.post(url, headers:, body: payload)
-
-    # Check if the API request was successful
-    if response.code == 200 && response.parsed_response['status']
-      true
-    else
-      false
-    end
+  def successful_response?(response)
+    response.code == 200 && response.parsed_response['status']
   end
 end

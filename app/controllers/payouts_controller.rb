@@ -24,12 +24,23 @@ class PayoutsController < ApplicationController
 
   def create_payout_api(payout)
     url = 'https://api.korapay.com/merchant/api/v1/transactions/disburse'
-    headers = {
+    headers = build_headers
+    payload = build_payload(payout)
+
+    response = HTTParty.post(url, headers:, body: payload)
+
+    successful_response?(response)
+  end
+
+  def build_headers
+    {
       'Authorization' => "Bearer #{current_user.kora_api_sk}",
       'Content-Type' => 'application/json'
     }
+  end
 
-    payload = {
+  def build_payload(payout)
+    {
       reference: payout.reference,
       destination: {
         type: 'bank_account',
@@ -46,13 +57,9 @@ class PayoutsController < ApplicationController
         }
       }
     }.to_json
+  end
 
-    response = HTTParty.post(url, headers:, body: payload)
-
-    if response.code === 200 && response.parsed_response['status']
-      true
-    else
-      false
-    end
+  def successful_response?(response)
+    response.code == 200 && response.parsed_response['status']
   end
 end
