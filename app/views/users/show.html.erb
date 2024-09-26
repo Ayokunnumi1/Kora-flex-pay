@@ -1,0 +1,36 @@
+<h1>User Details</h1>
+<p>
+  <strong>Name:</strong>
+  <%= @user.first_name %> <%= @user.last_name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<h2>Payouts</h2>
+<% if @payouts.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payouts.each do |payout| %>
+        <tr>
+          <td><%= payout.reference %></td>
+          <td><%= number_to_currency(payout.amount, unit: payout.currency) %></td>
+          <td><%= payout.currency %></td>
+          <td><%= payout.status %></td>
+          <td><%= payout.created_at.strftime("%d %b %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No payouts found for this user.</p>
+<% end %>
