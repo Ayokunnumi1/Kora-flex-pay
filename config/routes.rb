@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'mobile_money_transactions/create'
   # get 'mobile_money/create'
+  devise_for :users
   root 'users#index'
+
   get '/payment_success', to: 'payments#success', as: 'payment_success'
   resources :users, only: [:index]
   resources :mobile_money_transactions, only: [:new, :create, :index]
@@ -17,10 +19,4 @@ Rails.application.routes.draw do
       post :create
     end
   end
-  
-  devise_for :users
-
-  root to: 'users#index'
-
-  resources :users
 end
