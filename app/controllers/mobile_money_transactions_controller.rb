@@ -1,5 +1,4 @@
 class MobileMoneyTransactionsController < ApplicationController
-
   def new
     @mobile_money_transaction = current_user.mobile_money_transactions.new
   end
@@ -8,11 +7,11 @@ class MobileMoneyTransactionsController < ApplicationController
     @mobile_money_transaction = current_user.mobile_money_transactions.new(mobile_money_transaction_params)
 
     if @mobile_money_transaction.save
-   
+
       resource_params = {
-        amount: @mobile_money_transaction.amount.to_i, 
-        currency: @mobile_money_transaction.currency, 
-        default_channel: "pay_with_bank",
+        amount: @mobile_money_transaction.amount.to_i,
+        currency: @mobile_money_transaction.currency,
+        default_channel: 'pay_with_bank',
         reference: SecureRandom.uuid,
         customer: {
           name: @mobile_money_transaction.customer_name,
@@ -21,18 +20,18 @@ class MobileMoneyTransactionsController < ApplicationController
       }
 
       # Call the Kora API via the service class
-      api_service = Services.new(ENV['API_KEY'])
+      api_service = Services.new(ENV.fetch('API_KEY', nil))
       response = api_service.create_resource(resource_params)
 
       if response.success?
-      # Save the transaction in the database, associating it with the current user
-      MobileMoneyTransaction.create(
-        amount: params[:amount].to_i,
-        currency: params[:currency],
-        customer_name: params[:name],
-        customer_email: params[:email],
-        user_id: current_user.id  # Associate with the current user
-      )
+        # Save the transaction in the database, associating it with the current user
+        MobileMoneyTransaction.create(
+          amount: params[:amount].to_i,
+          currency: params[:currency],
+          customer_name: params[:name],
+          customer_email: params[:email],
+          user_id: current_user.id # Associate with the current user
+        )
 
         # Extract the checkout URL from the response
         checkout_url = response.parsed_response['data']['checkout_url']
@@ -53,7 +52,7 @@ class MobileMoneyTransactionsController < ApplicationController
   private
 
   # Strong parameters to prevent mass assignment vulnerabilities
-   def mobile_money_transaction_params
+  def mobile_money_transaction_params
     params.require(:mobile_money_transaction).permit(:amount, :currency, :customer_name, :customer_email)
   end
 end

@@ -18,7 +18,8 @@ class PayoutsController < ApplicationController
   private
 
   def payout_params
-    params.require(:payout).permit(:reference, :amount, :currency, :bank_code, :account_number, :narration, :customer_name, :customer_email)
+    params.require(:payout).permit(:reference, :amount, :currency, :bank_code, :account_number, :narration,
+                                   :customer_name, :customer_email)
   end
 
   def create_payout_api(payout)
@@ -46,7 +47,7 @@ class PayoutsController < ApplicationController
       }
     }.to_json
 
-    response = HTTParty.post(url, headers: headers, body: payload)
+    response = HTTParty.post(url, headers:, body: payload)
 
     if response.code === 200 && response.parsed_response['status']
       true

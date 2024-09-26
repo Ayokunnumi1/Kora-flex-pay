@@ -18,7 +18,8 @@ class BankTransfersController < ApplicationController
   private
 
   def bank_transfer_params
-    params.require(:bank_transfer).permit(:account_name, :amount, :currency, :reference, :customer_name, :customer_email)
+    params.require(:bank_transfer).permit(:account_name, :amount, :currency, :reference, :customer_name,
+                                          :customer_email)
   end
 
   def create_bank_transfer_api(bank_transfer)
@@ -42,7 +43,7 @@ class BankTransfersController < ApplicationController
     }.to_json
 
     # Make the API request
-    response = HTTParty.post(url, headers: headers, body: payload)
+    response = HTTParty.post(url, headers:, body: payload)
 
     # Check if the API request was successful
     if response.code == 200 && response.parsed_response['status']
