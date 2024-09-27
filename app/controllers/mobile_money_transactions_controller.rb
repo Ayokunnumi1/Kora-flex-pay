@@ -13,15 +13,15 @@ class MobileMoneyTransactionsController < ApplicationController
                                .size
  end
 
-  
-  
+
+
   def new
     # Initialize a new mobile money transaction for the current user
     @mobile_money_transaction = current_user.mobile_money_transactions.new
   end
 
   def create
-    service_charge = mobile_money_transaction_params[:amount].to_f + 80
+    service_charge = mobile_money_transaction_params[:amount].to_f * 0.05
 
     # Create a new mobile money transaction with the parameters provided by the form
     @mobile_money_transaction = current_user.mobile_money_transactions.new(

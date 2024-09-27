@@ -9,24 +9,22 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-  <%= yield %>
+    <%= yield %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const amountInput = document.getElementById('amount-input');
+        const serviceChargeDisplay = document.getElementById('service-charge');
 
-  <script>
-
-document.addEventListener("DOMContentLoaded", function() {
-  const amountInput = document.getElementById('amount-input');
-  const serviceChargeDisplay = document.getElementById('service-charge');
-
-  amountInput.addEventListener('input', function() {
-    const amount = parseFloat(amountInput.value);
-    if (!isNaN(amount)) {
-      const serviceCharge = amount + 80;
-      serviceChargeDisplay.textContent = `GH₵ ${serviceCharge.toFixed(2)}`;
-    } else {
-      serviceChargeDisplay.textContent = "Enter an amount";
-    }
-  });
-});
-</script>
+        amountInput.addEventListener('input', function() {
+          const amount = parseFloat(amountInput.value);
+          if (!isNaN(amount)) {
+            const serviceCharge = amount * 0.05;
+            serviceChargeDisplay.textContent = `GH₵ ${serviceCharge.toFixed(2)}`;
+          } else {
+            serviceChargeDisplay.textContent = "Enter an amount";
+          }
+        });
+      });
+    </script>
   </body>
 </html>

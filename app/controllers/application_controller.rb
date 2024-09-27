@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: %i[first_name last_name bank_name bank_code account_number phone_number])
+                                      keys: %i[first_name last_name bank_name bank_code account_number currency phone_number])
     devise_parameter_sanitizer.permit(:account_update,
-                                      keys: %i[first_name last_name bank_name bank_code account_number phone_number])
+                                      keys: %i[first_name last_name bank_name bank_code account_number currency phone_number])
   end
 end
