@@ -1,26 +1,43 @@
-<h1>Initialize Payment</h1>
+<main class="form-container">
+  <header class="form-header">
+    <h1>Initialize Payment</h1>
+    <div class="icon-container">
+      <%= link_to users_path do %>
+        <%= image_tag("backArrow.png", size: "30x30", alt: "Back to Users", class: "back-icon") %>
+      <% end %>
+    </div>
+  </header>
 
-<%= form_with model: @mobile_money_transaction, local: true do |f| %>
-  <div>
-    <%= f.label :amount, "Amount" %>
-    <%= f.number_field :amount, required: true %>
-  </div>
+  <%= form_with model: @mobile_money_transaction, local: true, class: "payment-form" do |f| %>
+   
+     <!-- Display the Service Charge (Amount + 80 GH₵) -->
+    <div class="form-group">
+      <label>Total Amount ( + 80 GH₵ service charge):</label>
+      <p id="service-charge">Enter an amount</p>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :amount, "Amount" %>
+      <%= f.number_field :amount, required: true, class: "form-input", id: "amount-input" %>
+    </div>
 
-  <div>
-    <%= f.label :currency, "Currency" %>
-    <%= f.select :currency, options_for_select([["GHS", "GHS"]], "GHS"), required: true %>
+    <div class="form-group">
+      <%= f.label :currency, "Currency" %>
+      <%= f.select :currency, options_for_select([["GHS", "GHS"]], "GHS"), required: true, class: "form-select" %>
+    </div>
 
-  </div>
+    <div class="form-group">
+      <%= f.label :customer_name, "Customer Name" %>
+      <%= f.text_field :customer_name, required: true, class: "form-input" %>
+    </div>
 
-  <div>
-    <%= f.label :customer_name, "Customer Name" %>
-    <%= f.text_field :customer_name, required: true %>
-  </div>
+    <div class="form-group">
+      <%= f.label :customer_email, "Customer Email" %>
+      <%= f.email_field :customer_email, required: true, class: "form-input" %>
+    </div>
 
-  <div>
-    <%= f.label :customer_email, "Customer Email" %>
-    <%= f.email_field :customer_email, required: true %>
-  </div>
-
-  <%= f.submit "Submit Payment" %>
-<% end %>
+    <div class="form-group">
+      <%= f.submit "Submit Payment", class: "form-submit-btn" %>
+    </div>
+  <% end %>
+</main>

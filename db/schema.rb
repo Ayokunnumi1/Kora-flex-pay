@@ -73,4 +73,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_25_165454) do
     t.index ["unique_identifier"], name: "index_users_on_unique_identifier", unique: true
   end
 
+  add_foreign_key "bank_transfers", "users"
+  add_foreign_key "payouts", "users"
 end
