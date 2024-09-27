@@ -1,3 +1,4 @@
+
 <main class="user-dashboard-container">
   <!-- Navbar Section -->
   <header class="navbar">
@@ -16,6 +17,8 @@
       <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-avatar") %>
     </div>
   </header>
+
+<%= link_to 'Create New Payout', new_payout_path, class: 'btn btn-primary' %>
 
   <!-- Dashboard Content -->
   <section class="dashboard-container">
@@ -76,3 +79,4 @@
     </section>
   </section>
 </main>
+

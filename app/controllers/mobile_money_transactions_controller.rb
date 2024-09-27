@@ -29,7 +29,6 @@ class MobileMoneyTransactionsController < ApplicationController
     )
 
     if @mobile_money_transaction.save
-      # If the transaction is saved, build the resource parameters needed for Kora API
       resource_params = build_resource_params(@mobile_money_transaction)
 
       # Call the Kora API via the service class using the built resource parameters

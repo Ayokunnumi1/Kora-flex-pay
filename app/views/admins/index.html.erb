@@ -1,0 +1,54 @@
+<h1>Account Balance</h1>
+<%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, class: 'btn btn-danger' %>
+<p><strong>Name:</strong> <%= current_admin.name %></p>
+<p><strong>Email:</strong> <%= current_admin.email %></p>
+<h2>Balance</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Available Balance</th>
+      <th>Pending Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <% if @balance[:error] %>
+          Error: <%= @balance[:error] %>
+        <% else %>
+          <%= @balance[:available_balance] || 'N/A' %>
+        <% end %>
+      </td>
+      <td>
+        <% if @balance[:error] %>
+          Error: <%= @balance[:error] %>
+        <% else %>
+          <%= @balance[:pending_balance] || 'N/A' %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h1>Users and Their Mobile customer transactions</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Number of Customer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users_with_mobile_money_count.each do |user| %>
+      <tr>
+        <td>
+          <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %>
+        </td>
+        <td><%= user.email %></td>
+        <td><%= user.phone_number %></td>
+        <td><%= user.transactions_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
