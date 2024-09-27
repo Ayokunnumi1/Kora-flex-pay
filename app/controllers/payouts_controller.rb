@@ -4,7 +4,7 @@ class PayoutsController < ApplicationController
   def new
     @payout = current_user.payouts.new(
       reference: generate_reference, # Assuming you have a method to generate a unique reference
-      currency: 'NGN', # Default currency
+      currency: current_user.currency,
       bank_code: current_user.bank_code, # Autofill from user data
       account_number: current_user.account_number, # Autofill from user data
       customer_name: "#{current_user.first_name} #{current_user.last_name}", # Autofill from user data
@@ -13,16 +13,22 @@ class PayoutsController < ApplicationController
   end
 
   def create
-    @payout = current_user.payouts.new(payout_params)
-    @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
-
-    if @payout.save
-      redirect_to users_path(@payout), notice: 'Payout was successfully created.'
-    else
-      flash.now[:alert] = 'Failed to create payout.'
+    if payout_params[:amount].to_f > current_user.available_balance
+      flash.now[:alert] = 'Insufficient balance for this payout.'
       render :new
+    else
+      @payout = current_user.payouts.new(payout_params)
+      @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
+
+      if @payout.save
+        redirect_to users_path(@payout), notice: 'Payout was successfully created.'
+      else
+        flash.now[:alert] = 'Failed to create payout.'
+        render :new
+      end
     end
   end
+
 
   def edit
     # @payout is set by the before_action

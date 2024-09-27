@@ -1,43 +1,38 @@
 <h2>Sign up</h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "signup-form") do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-
   <div class="field">
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name, autofocus: true, class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :last_name %><br />
     <%= f.text_field :last_name, class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autocomplete: "email", class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :bank_name %><br />
     <%= f.text_field :bank_name, class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :bank_code %><br />
     <%= f.text_field :bank_code, class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :account_number %><br />
     <%= f.text_field :account_number, class: "form-input" %>
   </div>
-
+  <div class="field">
+    <%= f.label :currency %><br />
+    <%= f.select :currency, options_for_select([['Nigerian Naira (NGN)', 'NGN'], ['Ghanaian Cedi (GHS)', 'GHS'], ['Kenyan Shilling (KES)', 'KES'], ['South African Rand (ZAR)', 'ZAR'], ['US Dollar (USD)', 'USD']], f.object.currency), {}, class: "form-input" %>
+  </div>
   <div class="field">
     <%= f.label :phone_number %><br />
     <%= f.telephone_field :phone_number, class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
@@ -45,15 +40,12 @@
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password", class: "form-input" %>
   </div>
-
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input" %>
   </div>
-
   <div class="actions">
     <%= f.submit "Sign up", class: "form-submit-btn" %>
   </div>
 <% end %>
-
 <%= render "devise/shared/links" %>
