@@ -24,7 +24,7 @@
       <% @mobile_money_transaction.each do |transaction| %>
         <div class="transaction-card">
           <p><strong>Customer Name:</strong> <%= transaction.customer_name %></p>
-          <p><strong>Amount:</strong> GH₵ <%= number_to_currency(transaction.amount / 100.0, unit: '') %></p>
+          <p><strong>Amount:</strong> GH₵ <%= number_to_currency(transaction.amount, unit: '') %></p>
           <p><strong>Email:</strong> <%= transaction.customer_email %></p>
           <p><strong>Date:</strong> <%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
         </div>
