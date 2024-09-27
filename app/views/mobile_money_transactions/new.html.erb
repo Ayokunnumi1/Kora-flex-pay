@@ -9,9 +9,16 @@
   </header>
 
   <%= form_with model: @mobile_money_transaction, local: true, class: "payment-form" do |f| %>
+   
+     <!-- Display the Service Charge (Amount + 80 GH₵) -->
+    <div class="form-group">
+      <label>Total Amount ( + 80 GH₵ service charge):</label>
+      <p id="service-charge">Enter an amount</p>
+    </div>
+    
     <div class="form-group">
       <%= f.label :amount, "Amount" %>
-      <%= f.number_field :amount, required: true, class: "form-input" %>
+      <%= f.number_field :amount, required: true, class: "form-input", id: "amount-input" %>
     </div>
 
     <div class="form-group">
