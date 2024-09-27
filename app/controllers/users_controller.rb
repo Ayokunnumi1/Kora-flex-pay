@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!,  unless: :admin_signed_in?
+  before_action :authenticate_user!, unless: :admin_signed_in?
   def index
     @user = current_user
     # @user_balance = @user.fetch_balance

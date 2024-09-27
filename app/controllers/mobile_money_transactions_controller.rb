@@ -7,7 +7,7 @@ class MobileMoneyTransactionsController < ApplicationController
     @mobile_money_transaction = current_user.mobile_money_transactions.new(mobile_money_transaction_params)
 
     if @mobile_money_transaction.save
-      
+
       resource_params = build_resource_params(@mobile_money_transaction)
 
       # Call the Kora API via the service class

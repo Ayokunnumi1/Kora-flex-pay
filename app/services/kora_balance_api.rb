@@ -3,11 +3,11 @@ class KoraBalanceApi
   base_uri 'https://api.korapay.com/merchant/api/v1'
 
   def fetch_balance
-    api_key = ENV['API_KEY']  # Fetch API key from the .env file
+    api_key = ENV.fetch('API_KEY', nil) # Fetch API key from the .env file
 
-    response = self.class.get('/balances', headers: { "Authorization" => "Bearer #{api_key}" })
+    response = self.class.get('/balances', headers: { 'Authorization' => "Bearer #{api_key}" })
 
-    puts response.parsed_response  # For debugging purposes
+    puts response.parsed_response # For debugging purposes
 
     if response.success?
       data = response.parsed_response

@@ -1,5 +1,5 @@
 class PayoutsController < ApplicationController
-  before_action :set_payout, only: [:edit, :update]
+  before_action :set_payout, only: %i[edit update]
 
   def new
     @payout = current_user.payouts.new(
@@ -7,7 +7,7 @@ class PayoutsController < ApplicationController
       currency: 'NGN', # Default currency
       bank_code: current_user.bank_code, # Autofill from user data
       account_number: current_user.account_number, # Autofill from user data
-      customer_name: current_user.first_name + ' ' + current_user.last_name, # Autofill from user data
+      customer_name: "#{current_user.first_name} #{current_user.last_name}", # Autofill from user data
       customer_email: current_user.email # Autofill from user data
     )
   end
@@ -61,7 +61,7 @@ class PayoutsController < ApplicationController
 
   def build_headers
     {
-      'Authorization' => "Bearer #{ENV['API_KEY']}",
+      'Authorization' => "Bearer #{ENV.fetch('API_KEY', nil)}",
       'Content-Type' => 'application/json'
     }
   end
@@ -100,5 +100,4 @@ class PayoutsController < ApplicationController
     timestamp = Time.now.to_i
     "unique-reference-#{timestamp}#{unique_code}"
   end
-
 end
