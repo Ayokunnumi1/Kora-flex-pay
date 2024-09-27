@@ -21,8 +21,12 @@ class MobileMoneyTransactionsController < ApplicationController
   end
 
   def create
+    service_charge = mobile_money_transaction_params[:amount].to_f + 80
+
     # Create a new mobile money transaction with the parameters provided by the form
-    @mobile_money_transaction = current_user.mobile_money_transactions.new(mobile_money_transaction_params)
+    @mobile_money_transaction = current_user.mobile_money_transactions.new(
+      mobile_money_transaction_params.merge(amount: service_charge)
+    )
 
     if @mobile_money_transaction.save
       # If the transaction is saved, build the resource parameters needed for Kora API
