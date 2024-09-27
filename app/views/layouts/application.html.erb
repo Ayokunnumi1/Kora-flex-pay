@@ -18,7 +18,7 @@
         amountInput.addEventListener('input', function() {
           const amount = parseFloat(amountInput.value);
           if (!isNaN(amount)) {
-            const serviceCharge = amount * 0.05;
+            const serviceCharge = amount * 1.05;
             serviceChargeDisplay.textContent = `GH₵ ${serviceCharge.toFixed(2)}`;
           } else {
             serviceChargeDisplay.textContent = "Enter an amount";
