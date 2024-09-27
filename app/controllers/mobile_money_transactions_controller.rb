@@ -7,10 +7,10 @@ class MobileMoneyTransactionsController < ApplicationController
 
     # Get the total number of transactions for each customer
     @total_frequent_customers = MobileMoneyTransaction
-      .group(:customer_name)
-      .having('COUNT(*) > 1')
-      .count
-      .size
+                                  .group(:customer_name)
+                                  .having('COUNT(*) > 1')
+                                  .count
+                                  .size
   end
 
   def new
@@ -21,47 +21,42 @@ class MobileMoneyTransactionsController < ApplicationController
   def create
     service_charge = mobile_money_transaction_params[:amount].to_f * 1.05
 
-    # Create a new mobile money transaction with the parameters provided by the form
-    @mobile_money_transaction = current_user.mobile_money_transactions.new(
-      mobile_money_transaction_params.merge(amount: service_charge)
-    )
+    # Build the resource parameters for Kora API
+    resource_params = {
+      amount: service_charge.to_i, # Use service_charge here
+      currency: mobile_money_transaction_params[:currency],
+      default_channel: 'pay_with_bank',
+      reference: SecureRandom.uuid,  # Generate a unique reference for the transaction
+      customer: {
+        name: mobile_money_transaction_params[:customer_name],
+        email: mobile_money_transaction_params[:customer_email]
+      }
+    }
 
-    if @mobile_money_transaction.save
-      resource_params = build_resource_params(@mobile_money_transaction)
+    # Call the Kora API via the service class using the built resource parameters
+    api_service = Services.new(ENV.fetch('API_KEY', nil))
+    response = api_service.create_resource(resource_params)
 
-      # Call the Kora API via the service class using the built resource parameters
-      api_service = Services.new(ENV.fetch('API_KEY', nil))
-      response = api_service.create_resource(resource_params)
+    if response.success?
+      # If the API response is successful, create and save the transaction
+      @mobile_money_transaction = current_user.mobile_money_transactions.new(
+        mobile_money_transaction_params.merge(amount: service_charge)
+      )
 
-      if response.success?
-        # If the API response is successful, redirect the user to the KoraPay checkout page
-        # Note: We removed the duplicate creation of MobileMoneyTransaction here
+      if @mobile_money_transaction.save
+        # Redirect to KoraPay checkout page
         redirect_to response.parsed_response['data']['checkout_url'], allow_other_host: true
       else
-        # Handle errors from the API response if it fails
-        handle_error_response(response)
+        # If saving fails, show errors in the form
+        render :new
       end
     else
-      # If saving the transaction fails, re-render the form with the errors
-      render :new
+      # Handle errors from the API response if it fails
+      handle_error_response(response)
     end
   end
 
   private
-
-  # Method to build the parameters for the Kora API request
-  def build_resource_params(transaction)
-    {
-      amount: transaction.amount.to_i,
-      currency: transaction.currency,
-      default_channel: 'pay_with_bank',
-      reference: SecureRandom.uuid, # Generate a unique reference for the transaction
-      customer: {
-        name: transaction.customer_name,
-        email: transaction.customer_email
-      }
-    }
-  end
 
   # Method to handle error response from the Kora API
   def handle_error_response(response)
