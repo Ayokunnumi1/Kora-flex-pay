@@ -4,7 +4,7 @@ class PayoutsController < ApplicationController
   def new
     @payout = current_user.payouts.new(
       reference: generate_reference, # Assuming you have a method to generate a unique reference
-      currency: 'NGN', # Default currency
+      currency: current_user.currency,
       bank_code: current_user.bank_code, # Autofill from user data
       account_number: current_user.account_number, # Autofill from user data
       customer_name: "#{current_user.first_name} #{current_user.last_name}", # Autofill from user data
