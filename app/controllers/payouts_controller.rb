@@ -30,6 +30,7 @@ class PayoutsController < ApplicationController
 
   def update
     if create_payout_api(@payout)
+      @payout.update(paid: true)
       redirect_to admins_index_path, notice: 'Payout was successfully processed.'
     else
       flash.now[:alert] = 'Failed to create payout via API'
