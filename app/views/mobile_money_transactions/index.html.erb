@@ -1,0 +1,36 @@
+<section class="summary-section">
+  <div class="icon-container">
+    <%= link_to users_path do %>
+      <%= image_tag("backArrow.png", size: "30x30", alt: "Back to Users", class: "back-icon") %>
+    <% end %>
+  </div>
+
+  <!-- Summary Card for Total Customers -->
+  <div class="summary-card">
+    <h3>Total Customers</h3>
+    <p class="total-customers"><%= @total_customers %></p>
+  </div>
+
+  <!-- Total Frequent Customers -->
+  <h3 class="total-frequent-customers">
+    Total Frequent Customers: <%= @total_frequent_customers %>
+  </h3>
+
+  <!-- Transactions List -->
+  <div class="transactions-list">
+    <h3>Recent Mobile Money Transactions</h3>
+
+    <% if @mobile_money_transaction.any? %>
+      <% @mobile_money_transaction.each do |transaction| %>
+        <div class="transaction-card">
+          <p><strong>Customer Name:</strong> <%= transaction.customer_name %></p>
+          <p><strong>Amount:</strong> GH₵ <%= number_to_currency(transaction.amount / 100.0, unit: '') %></p>
+          <p><strong>Email:</strong> <%= transaction.customer_email %></p>
+          <p><strong>Date:</strong> <%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No mobile money transactions found.</p>
+    <% end %>
+  </div>
+</section>
