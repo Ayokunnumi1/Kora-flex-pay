@@ -1,42 +1,82 @@
-<div>
-  <%= image_tag("logo.png", alt: "Logo") %>
-  <h2>Flex Pay</h2>
-</div>
-<% if @user %>
-  <h2>Welcome <%= @user.first_name %></h2>
-<% else %>
-  <p>No user is logged in.</p>
-<% end %>
-<p>Be a POS Agent, set up kyc
-  <p>
-    <%= link_to 'Mobile Money', new_mobile_money_transaction_path, class: 'btn btn-primary', style: 'margin-top: 20px; margin-left: 30px' %>
-    <%= link_to 'Create New Payout', new_payout_path, class: 'btn btn-primary' %>
-    <h3>Mobile Money Transactions</h3>
-    <% if @mobile_money_transaction.any? %>
-      <table>
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Currency</th>
-            <th>Customer Name</th>
-            <th>Customer Email</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @mobile_money_transaction.each do |transaction| %>
-            <tr>
-              <td><%= number_to_currency(transaction.amount / 100.0, unit: '') %></td>
-              <td><%= transaction.currency %></td>
-              <td><%= transaction.customer_name %></td>
-              <td><%= transaction.customer_email %></td>
-              <td><%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-            </tr>
+
+<main class="user-dashboard-container">
+  <!-- Navbar Section -->
+  <header class="navbar">
+    <div class="logo-container">
+      <%= image_tag("logo.png", size: "30x30", alt: "Flex Pay Logo", class: "logo-img") %>
+      <h2 class="logo-text">FlexPay</h2>
+    </div>
+    <div class="user-profile">
+      <div class="user-info">
+        <% if @user %>
+          <p class="welcome-message"><%= @user.first_name.slice(0, 3) %>!</p>
+        <% else %>
+          <p class="welcome-message">No user logged in</p>
+        <% end %>
+      </div>
+      <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-avatar") %>
+    </div>
+  </header>
+
+<%= link_to 'Create New Payout', new_payout_path, class: 'btn btn-primary' %>
+
+  <!-- Dashboard Content -->
+  <section class="dashboard-container">
+    <!-- First Section: Navigation Icons -->
+    <section class="first-section">
+      <div class="icon-grid">
+        <div class="icon">
+          <%= link_to new_mobile_money_transaction_path do %>
+            <%= image_tag("money.png", size: "40x40", alt: "Customers Icon") %>
           <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>No mobile money transactions found.</p>
-    <% end %>
-    <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to sign out?' }, class: 'btn btn-danger' %>
-    <h1>Hi I am a POS agent</h1>
+          <p>Cardless Cash</p>
+        </div>
+        <div class="icon">
+          <%= image_tag("kyc.png", size: "30x30", alt: "KYC Icon") %>
+          <p>Set up KYC</p>
+        </div>
+        <div class="icon">
+          <%= link_to mobile_money_transactions_path do %>
+            <%= image_tag("customers.png", size: "40x40", alt: "Cardless Cash Icon") %>
+          <% end %>
+          <p>Customers</p>
+        </div>
+        <div class="icon">
+          <%= image_tag("income.png", size: "30x30", alt: "Income Icon") %>
+          <p>Income</p>
+        </div>
+        <div class="icon">
+          <%= image_tag("commission.png", size: "30x30", alt: "Commission Icon") %>
+          <p>Commission</p>
+        </div>
+        <div class="icon">
+          <%= button_to image_tag("logout.png", size: "40x40", alt: "Logout Icon"), 
+                        destroy_user_session_path, 
+                        method: :delete, 
+                        class: '', 
+                        title: 'Sign Out' %>
+          <p>Sign Out</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Second Section: Dashboard Summary Cards -->
+    <section class="second-section">
+      <div class="summary-cards">
+        <div class="summary-card">
+          <h3>Total Commission Received</h3>
+          <p class="amount">GH₵<%= number_to_currency(@total_amount, unit: '') %></p>
+        </div>
+        <div class="summary-card">
+          <h3>Total Commission Withdrawn</h3>
+          <p class="amount">GH₵<%= number_to_currency(@total_amount_withdrawn, unit: '') %></p>
+        </div>
+        <div class="summary-card">
+          <h3>Total Customers</h3>
+          <p class="total-customers"><%= @total_customers %></p>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+
