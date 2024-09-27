@@ -1,4 +1,7 @@
-<h2>Log in</h2>
+<div class="logo-container">
+      <%= image_tag("logo.png", size: "30x30", alt: "Flex Pay Logo", class: "logo-img") %>
+      <h2 class="logo-text">FlexPay</h2>
+</div>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "login-form") do |f| %>
   <div class="field">
