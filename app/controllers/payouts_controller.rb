@@ -13,16 +13,22 @@ class PayoutsController < ApplicationController
   end
 
   def create
-    @payout = current_user.payouts.new(payout_params)
-    @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
-
-    if @payout.save
-      redirect_to users_path(@payout), notice: 'Payout was successfully created.'
-    else
-      flash.now[:alert] = 'Failed to create payout.'
+    if payout_params[:amount].to_f > current_user.available_balance
+      flash.now[:alert] = 'Insufficient balance for this payout.'
       render :new
+    else
+      @payout = current_user.payouts.new(payout_params)
+      @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
+
+      if @payout.save
+        redirect_to users_path(@payout), notice: 'Payout was successfully created.'
+      else
+        flash.now[:alert] = 'Failed to create payout.'
+        render :new
+      end
     end
   end
+
 
   def edit
     # @payout is set by the before_action
