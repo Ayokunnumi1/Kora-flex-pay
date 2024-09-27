@@ -27,7 +27,7 @@
   </div>
   <div class="field">
     <%= f.label :currency %><br />
-    <%= f.text_field :currency, class: "form-input" %>
+    <%= f.select :currency, options_for_select([['Nigerian Naira (NGN)', 'NGN'], ['Ghanaian Cedi (GHS)', 'GHS'], ['Kenyan Shilling (KES)', 'KES'], ['South African Rand (ZAR)', 'ZAR'], ['US Dollar (USD)', 'USD']], f.object.currency), {}, class: "form-input" %>
   </div>
   <div class="field">
     <%= f.label :phone_number %><br />
