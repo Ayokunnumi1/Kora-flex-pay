@@ -29,26 +29,34 @@
     </tr>
   </tbody>
 </table>
-<h1>Users and Their Mobile customer transactions</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone Number</th>
-      <th>Number of Customer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users_with_mobile_money_count.each do |user| %>
+<h1>Users and Their Mobile Customer Transactions and Payouts</h1>
+<% if @users_with_mobile_money_count.any? %>  <!-- Check if there are users -->
+  <table>
+    <thead>
       <tr>
-        <td>
-          <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %>
-        </td>
-        <td><%= user.email %></td>
-        <td><%= user.phone_number %></td>
-        <td><%= user.transactions_count %></td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Transaction Count</th>
+        <th>Unpaid Payout Count</th>
+ <!-- New column for payout count -->
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @users_with_mobile_money_count.each do |user| %>
+        <tr>
+          <td>
+            <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %>
+          </td>
+          <td><%= user.email %></td>
+          <td><%= user.phone_number %></td>
+          <td><%= user.transactions_count || 0 %></td>
+          <td><%= user.unpaid_payouts_count || 0 %></td>
+ <!-- Display unpaid payout count -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>  <!-- Display message if no users found -->
+  <p>No users found with mobile transactions or payouts.</p>
+<% end %>

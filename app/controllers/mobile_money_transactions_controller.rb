@@ -1,19 +1,17 @@
 class MobileMoneyTransactionsController < ApplicationController
   def index
-  @mobile_money_transaction = current_user.mobile_money_transactions.all
+    @mobile_money_transaction = current_user.mobile_money_transactions.all
 
-  # Count the total unique customers
-  @total_customers = MobileMoneyTransaction.select(:customer_name).distinct.count
+    # Count the total unique customers
+    @total_customers = MobileMoneyTransaction.select(:customer_name).distinct.count
 
-  # Get the total number of transactions for each customer
- @total_frequent_customers =  MobileMoneyTransaction
-                               .group(:customer_name)
-                               .having('COUNT(*) > 1')
-                               .count
-                               .size
- end
-
-
+    # Get the total number of transactions for each customer
+    @total_frequent_customers = MobileMoneyTransaction
+      .group(:customer_name)
+      .having('COUNT(*) > 1')
+      .count
+      .size
+  end
 
   def new
     # Initialize a new mobile money transaction for the current user
@@ -57,7 +55,7 @@ class MobileMoneyTransactionsController < ApplicationController
       amount: transaction.amount.to_i,
       currency: transaction.currency,
       default_channel: 'pay_with_bank',
-      reference: SecureRandom.uuid,  # Generate a unique reference for the transaction
+      reference: SecureRandom.uuid, # Generate a unique reference for the transaction
       customer: {
         name: transaction.customer_name,
         email: transaction.customer_email
