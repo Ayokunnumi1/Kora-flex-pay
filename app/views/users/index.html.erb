@@ -23,8 +23,10 @@
     <section class="first-section">
       <div class="icon-grid">
         <div class="icon">
-          <%= image_tag("commission.png", size: "30x30", alt: "Commission Icon") %>
-          <p>Commission</p>
+          <%= link_to new_mobile_money_transaction_path do %>
+            <%= image_tag("money.png", size: "40x40", alt: "Customers Icon") %>
+          <% end %>
+          <p>Cardless Cash</p>
         </div>
         <div class="icon">
           <%= image_tag("kyc.png", size: "30x30", alt: "KYC Icon") %>
@@ -32,7 +34,7 @@
         </div>
         <div class="icon">
           <%= link_to mobile_money_transactions_path do %>
-            <%= image_tag("customer.png", size: "40x40", alt: "Cardless Cash Icon") %>
+            <%= image_tag("customers.png", size: "40x40", alt: "Cardless Cash Icon") %>
           <% end %>
           <p>Customers</p>
         </div>
@@ -41,10 +43,8 @@
           <p>Income</p>
         </div>
         <div class="icon">
-          <%= link_to new_mobile_money_transaction_path do %>
-            <%= image_tag("money.png", size: "40x40", alt: "Customers Icon") %>
-          <% end %>
-          <p>Cardless Cash</p>
+          <%= image_tag("commission.png", size: "30x30", alt: "Commission Icon") %>
+          <p>Commission</p>
         </div>
         <div class="icon">
           <%= button_to image_tag("logout.png", size: "40x40", alt: "Logout Icon"), 
