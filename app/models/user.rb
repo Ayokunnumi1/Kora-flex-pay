@@ -12,6 +12,7 @@ class User < ApplicationRecord
   before_create :generate_unique_identifier
 
   validates :unique_identifier, uniqueness: true
+  validates :first_name, :last_name, :bank_name, :bank_code, :account_number, :phone_number, :currency, presence: true
 
   private
 

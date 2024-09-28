@@ -21,7 +21,8 @@ body {
 .welcome-message {
   font-family: '  Roboto', sans-serif;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  color: #333;
 }
 
 .logo-container {
@@ -50,16 +51,17 @@ body {
   margin-right: 0.5rem;
 }
 
-.welcome-message {
-  font-size: 1rem;
-  color: #333;
-}
-
 .user-avatar {
   border-radius: 50%;
 }
 
 .dashboard-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
   margin-top: 1rem;
 }
 
@@ -87,11 +89,50 @@ body {
   color: #333;
 }
 
+/* Wallet Balance and Pending Withdraw Styles */
+.wallet-balance-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.balance-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.balance-card h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #4caf50;
+
+  /* Consistent with the navbar color */
+}
+
+.balance-card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+
+  /* Dark color for contrast */
+}
+
 .summary-cards {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 2rem;
+}
+
+.admin-summary-card {
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 8px;
+  width: 48%;
 }
 
 .summary-card {
@@ -126,11 +167,10 @@ body {
   margin-bottom: 1rem;
 }
 
-h1 {
+h1,
+h2 {
   font-size: 1.5rem;
   color: #007bff;
-
-  /* Flex Pay's blue color */
 }
 
 .icon-container {
@@ -171,8 +211,19 @@ h1 {
   transition: border-color 0.2s ease;
 }
 
+.input-field {
+  width: 95%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 .form-input:focus,
-.form-select:focus {
+.form-select:focus,
+.input-field:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -193,8 +244,6 @@ h1 {
   background-color: #0056b3;
 }
 
-/* Additional styles for the summary and transactions section */
-
 /* General layout adjustments for sections */
 .summary-section {
   padding: 1rem;
@@ -203,6 +252,9 @@ h1 {
 
 /* Style for the transactions list and transaction cards */
 .transactions-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
   margin-top: 2rem;
 }
 
@@ -259,26 +311,12 @@ h2 {
 }
 
 /* Style for form field labels */
-.field label {
+.field label,
+.signup-form-field {
   font-size: 1rem;
   color: #555;
   margin-bottom: 0.5rem;
   display: block;
-}
-
-/* Input styles reuse from previous form pages */
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: border-color 0.2s ease;
-}
-
-.form-input:focus {
-  border-color: #007bff;
-  outline: none;
 }
 
 /* Remember me checkbox */
@@ -290,23 +328,6 @@ h2 {
 
 .remember-me input {
   margin-right: 0.5rem;
-}
-
-/* Submit button reuses the same form submit button styles */
-.form-submit-btn {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.form-submit-btn:hover {
-  background-color: #0056b3;
 }
 
 /* Links (e.g., forgot password) */
@@ -324,60 +345,286 @@ h2 {
   text-decoration: underline;
 }
 
-/* General container for the sign up form */
-.signup-form {
-  background-color: white;
-  padding: 12rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 2rem auto;
+.signup-form-container {
+  padding-bottom: 100px;
+  padding-top: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the heading */
-h2 {
-  font-size: 1.75rem;
-  color: #007bff;
-
-  /* Flex Pay's blue color */
-  text-align: center;
-  margin-bottom: 2rem;
+.signup-form-field {
+  margin-bottom: 20px;
 }
 
-/* Reuse existing form field and button styles */
-.field label {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-  display: block;
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
 }
 
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
+.admin-logo {
+  display: flex;
+  align-items: center;
+}
+
+.admin-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon {
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+.nav-logout {
+  margin-right: 15px;
+}
+
+.admin-profile {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.user-icon {
+  margin-left: 10px;
+}
+
+.admin-dashboard {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 20px;
+}
+
+.admin-sidebar {
+  width: 20%;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-item,
+.sidebar-item-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.sidebar-item-content {
+  gap: 30px;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
   border-radius: 8px;
-  transition: border-color 0.2s ease;
 }
 
-.form-input:focus {
-  border-color: #007bff;
-  outline: none;
+.dashboard-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.form-submit-btn {
+.top-agents {
+  margin-bottom: 20px;
+}
+
+.agent-list {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.agent-list img {
+  margin: 0 auto;
+
+  /* Center the images */
+}
+
+.agent-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.agent-transactions {
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.transaction-item {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.agent-details-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.agent-info {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.subsection-title {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.payouts-table {
   width: 100%;
-  padding: 0.75rem;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.payouts-table th,
+.payouts-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.payouts-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.payouts-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.payouts-table tr:hover {
+  background-color: #e1f5fe;
+}
+
+.btn {
+  padding: 8px 12px;
   background-color: #007bff;
   color: white;
-  font-size: 1rem;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 
-.form-submit-btn:hover {
+.btn:hover {
   background-color: #0056b3;
+}
+
+.edit-payout-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.payout-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.payout-details-table th,
+.payout-details-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.payout-details-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.payout-details-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.payout-details-table tr:hover {
+  background-color: #e1f5fe;
+}
+
+.submit-container {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    display: none;
+  }
+
+  .transactions-list {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-details-container {
+    padding: 5px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .subsection-title {
+    font-size: 18px;
+  }
+
+  .payouts-table th,
+  .payouts-table td {
+    padding: 8px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+  }
+
+  .edit-payout-container {
+    padding: 15px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .payout-details-table th,
+  .payout-details-table td {
+    padding: 8px;
+  }
 }

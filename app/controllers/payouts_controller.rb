@@ -3,12 +3,12 @@ class PayoutsController < ApplicationController
 
   def new
     @payout = current_user.payouts.new(
-      reference: generate_reference, # Assuming you have a method to generate a unique reference
+      reference: generate_reference,
       currency: current_user.currency,
-      bank_code: current_user.bank_code, # Autofill from user data
-      account_number: current_user.account_number, # Autofill from user data
-      customer_name: "#{current_user.first_name} #{current_user.last_name}", # Autofill from user data
-      customer_email: current_user.email # Autofill from user data
+      bank_code: current_user.bank_code,
+      account_number: current_user.account_number,
+      customer_name: "#{current_user.first_name} #{current_user.last_name}",
+      customer_email: current_user.email
     )
   end
 
@@ -18,7 +18,7 @@ class PayoutsController < ApplicationController
       render :new
     else
       @payout = current_user.payouts.new(payout_params)
-      @payout.admin_id = Admin.first.id # Automatically set admin_id to the first admin in the database
+      @payout.admin_id = Admin.first.id
 
       if @payout.save
         redirect_to users_path(@payout), notice: 'Payout was successfully created.'
@@ -29,10 +29,7 @@ class PayoutsController < ApplicationController
     end
   end
 
-
-  def edit
-    # @payout is set by the before_action
-  end
+  def edit; end
 
   def update
     if create_payout_api(@payout)

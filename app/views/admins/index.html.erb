@@ -1,62 +1,107 @@
-<h1>Account Balance</h1>
-<%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, class: 'btn btn-danger' %>
-<p><strong>Name:</strong> <%= current_admin.name %></p>
-<p><strong>Email:</strong> <%= current_admin.email %></p>
-<h2>Balance</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Available Balance</th>
-      <th>Pending Balance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <% if @balance[:error] %>
-          Error: <%= @balance[:error] %>
-        <% else %>
-          <%= @balance[:available_balance] || 'N/A' %>
+<section class="dashboard-container">
+  <header class="admin-header">
+    <div class="admin-logo">
+      <%= image_tag("logo.png", size: "30x30", alt: "Flex Pay Logo") %>
+      <h2 class="logo-text">FlexPay</h2>
+    </div>
+    <nav class="admin-nav">
+      <%= image_tag("notification.png", size: "30x30", alt: "Notification Icon", class: "nav-icon") %>
+      <%= image_tag("envelope.png", size: "30x30", alt: "Inbox Icon", class: "nav-icon") %>
+      <div class="nav-logout">
+        <%= button_to destroy_admin_session_path, method: :delete do %>
+          <%= image_tag("logout.png", size: "30x30", alt: "Sign Out Icon") %>
         <% end %>
-      </td>
-      <td>
-        <% if @balance[:error] %>
-          Error: <%= @balance[:error] %>
+      </div>
+      <div class="admin-profile">
+        <p><strong>Welcome </strong> <%= current_admin.name %></p>
+        <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-icon") %>
+      </div>
+    </nav>
+  </header>
+  <div class="admin-dashboard">
+    <aside class="admin-sidebar admin-first-section">
+      <div class="sidebar-item">
+        <div class="sidebar-item-content">
+          <%= image_tag("home.png", size: "30x30", alt: "Home Icon") %>
+          <strong>Home</strong>
+        </div>
+        <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-content">
+          <%= image_tag("transactions.png", size: "30x30", alt: "Transactions Icon") %>
+          <strong>Transactions</strong>
+        </div>
+        <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-content">
+          <%= image_tag("worker.png", size: "30x30", alt: "Worker Icon") %>
+          <strong>Worker</strong>
+        </div>
+        <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-content">
+          <%= image_tag("income.png", size: "30x30", alt: "Income Icon") %>
+          <strong>Income</strong>
+        </div>
+        <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-content">
+          <%= image_tag("products.png", size: "30x30", alt: "Products Icon") %>
+          <strong>Products</strong>
+        </div>
+        <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
+      </div>
+    </aside>
+    <main class="admin-content admin-second-section">
+      <section class="dashboard-summary">
+        <div class="admin-summary-card summary-card">
+          <p><strong>Available Balance:</strong></p>
+          <% if @balance[:error] %>
+            <p>Error: <%= @balance[:error] %></p>
+          <% else %>
+            <p><%= @balance[:available_balance] || 'N/A' %></p>
+          <% end %>
+        </div>
+        <div class="admin-summary-card summary-card">
+          <p><strong>Pending Balance:</strong></p>
+          <% if @balance[:error] %>
+            <p>Error: <%= @balance[:error] %></p>
+          <% else %>
+            <p><%= @balance[:pending_balance] || 'N/A' %></p>
+          <% end %>
+        </div>
+      </section>
+      <section class="top-agents">
+        <h3>Top Rated POS Agents</h3>
+        <div class="agent-list">
+          <%= image_tag("pos1.png",  alt: "POS Agent 1", class: "agent-icon") %>
+          <%= image_tag("pos2.png",  alt: "POS Agent 2", class: "agent-icon") %>
+          <%= image_tag("pos3.png",  alt: "POS Agent 3", class: "agent-icon") %>
+          <%= image_tag("pos4.png",  alt: "POS Agent 4", class: "agent-icon") %>
+        </div>
+      </section>
+      <section class="agent-transactions">
+        <h2>Agent Transactions and Payout Management</h2>
+        <% if @users_with_mobile_money_count.any? %>
+          <div class="transactions-list">
+            <% @users_with_mobile_money_count.each do |user| %>
+              <div class="transaction-item">
+                <p><strong><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></strong></p>
+                <p>Email: <%= user.email %></p>
+                <p>Phone: <%= user.phone_number %></p>
+                <p>Transactions: <%= user.transactions_count || 0 %></p>
+                <p>Unpaid Payouts: <%= user.unpaid_payouts_count || 0 %></p>
+              </div>
+            <% end %>
+          </div>
         <% else %>
-          <%= @balance[:pending_balance] || 'N/A' %>
+          <p>No users found with mobile transactions or payouts.</p>
         <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h1>Users and Their Mobile Customer Transactions and Payouts</h1>
-<% if @users_with_mobile_money_count.any? %>  <!-- Check if there are users -->
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Transaction Count</th>
-        <th>Unpaid Payout Count</th>
- <!-- New column for payout count -->
-      </tr>
-    </thead>
-    <tbody>
-      <% @users_with_mobile_money_count.each do |user| %>
-        <tr>
-          <td>
-            <%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %>
-          </td>
-          <td><%= user.email %></td>
-          <td><%= user.phone_number %></td>
-          <td><%= user.transactions_count || 0 %></td>
-          <td><%= user.unpaid_payouts_count || 0 %></td>
- <!-- Display unpaid payout count -->
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>  <!-- Display message if no users found -->
-  <p>No users found with mobile transactions or payouts.</p>
-<% end %>
+      </section>
+    </main>
+  </div>
+</section>

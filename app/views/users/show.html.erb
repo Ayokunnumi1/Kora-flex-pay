@@ -1,44 +1,46 @@
-<h1>User Details</h1>
-<p>
-  <strong>Name:</strong>
-  <%= @user.first_name %> <%= @user.last_name %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<h2>Payouts</h2>
-<% if @payouts.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Reference</th>
-        <th>Amount</th>
-        <th>Currency</th>
-        <th>Status</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @payouts.each do |payout| %>
+<section class="agent-details-container">
+  <h1 class="section-title">POS Agent Details</h1>
+  <div class="agent-info">
+    <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+  </div>
+  <h2 class="subsection-title">Payouts</h2>
+  <% if @payouts.any? %>
+    <table class="payouts-table">
+      <thead>
         <tr>
-          <td><%= payout.reference %></td>
-          <td>
-            <% if payout.currency.present? %>
-              <%= number_to_currency(payout.amount, unit: payout.currency) %>
-            <% else %>
-              <%= payout.amount %> <!-- Just display the amount without currency formatting -->
-            <% end %>
-          </td>
-          <td><%= payout.currency %></td>
-          <td><%= payout.status %></td>
-          <td><%= payout.created_at.strftime("%d %b %Y") %></td>
-          <td><%= link_to 'Update Payout', edit_payout_path(payout), class: 'btn btn-primary' %>
-          </td>
+          <th>Reference</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No payouts found for this user.</p>
-<% end %>
+      </thead>
+      <tbody>
+        <% @payouts.each do |payout| %>
+          <tr>
+            <td><%= payout.reference %></td>
+            <td>
+              <% if payout.currency.present? %>
+                <%= number_to_currency(payout.amount, unit: payout.currency) %>
+              <% else %>
+                <%= payout.amount %>
+              <% end %>
+            </td>
+            <td><%= payout.currency %></td>
+            <td><%= payout.paid ? "Paid" : "Unpaid" %></td>
+            <td><%= payout.created_at.strftime("%d %b %Y") %></td>
+            <td>
+              <% if !payout.paid %>
+                <%= link_to 'Activate Payout', edit_payout_path(payout), class: 'btn btn-primary' %>
+              <%end%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No payouts found for this user.</p>
+  <% end %>
+</section>

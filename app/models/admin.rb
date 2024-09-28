@@ -6,6 +6,8 @@ class Admin < ApplicationRecord
 
   has_many :payouts
 
+  validates :name, presence: true
+
   def fetch_balance
     service = KoraBalanceApi.new
     service.fetch_balance
