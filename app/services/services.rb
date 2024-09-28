@@ -3,7 +3,6 @@ class Services
 
   base_uri 'https://api.korapay.com/merchant'
 
-
   def initialize(api_key)
     @options = {
       headers: {
