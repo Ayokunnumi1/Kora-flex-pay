@@ -7,10 +7,10 @@ class MobileMoneyTransactionsController < ApplicationController
 
     # Get the total number of transactions for each customer
     @total_frequent_customers = MobileMoneyTransaction
-                                  .group(:customer_name)
-                                  .having('COUNT(*) > 1')
-                                  .count
-                                  .size
+      .group(:customer_name)
+      .having('COUNT(*) > 1')
+      .count
+      .size
   end
 
   def new
@@ -20,13 +20,11 @@ class MobileMoneyTransactionsController < ApplicationController
 
   def create
     service_charge = mobile_money_transaction_params[:amount].to_f * 1.05
-
-    # Build the resource parameters for Kora API
     resource_params = {
-      amount: service_charge.to_i, # Use service_charge here
+      amount: service_charge.to_i,
       currency: mobile_money_transaction_params[:currency],
       default_channel: 'pay_with_bank',
-      reference: SecureRandom.uuid,  # Generate a unique reference for the transaction
+      reference: SecureRandom.uuid, # Generate a unique reference for the transaction
       customer: {
         name: mobile_money_transaction_params[:customer_name],
         email: mobile_money_transaction_params[:customer_email]

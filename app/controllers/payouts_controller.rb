@@ -29,7 +29,6 @@ class PayoutsController < ApplicationController
     end
   end
 
-
   def edit
     # @payout is set by the before_action
   end

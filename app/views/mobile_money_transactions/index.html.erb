@@ -18,8 +18,6 @@
 
   <!-- Transactions List -->
   <div class="transactions-list">
-    <h3>Recent Mobile Money Transactions</h3>
-
     <% if @mobile_money_transaction.any? %>
       <% @mobile_money_transaction.each do |transaction| %>
         <div class="transaction-card">
