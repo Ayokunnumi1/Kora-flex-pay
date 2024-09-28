@@ -2,7 +2,7 @@
 
 <div align="center">
   <!-- You are encouraged to replace this logo with your own! Otherwise you can also remove it. -->
-  <img src="app/assets/images/logo.png" alt="logo" width="140"  height="auto" style="background: white; border-radius: 50%;" />
+  <img src="app/assets/images/e5d814d4-ab93-489e-888d-65297e4a4f84.jpg" alt="logo" width="100%"  height="auto" />
   <br/>
 
   <h3><b>Kora Flex Pay</b></h3>
