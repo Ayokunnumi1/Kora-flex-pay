@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, unless: :admin_signed_in?
   def index
+    if admin_signed_in?
+      redirect_to admins_index_path and return
+    end
+
     @user = current_user
     @mobile_money_transaction = @user.mobile_money_transactions
     @total_customers = MobileMoneyTransaction.select(:customer_name).distinct.count
