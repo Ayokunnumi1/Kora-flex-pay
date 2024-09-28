@@ -1,33 +1,58 @@
-<%= form_with model: @payout, local: true do |f| %>
-  <!-- Reference Field (Hidden) -->
-  <%= f.hidden_field :reference %>
-  <!-- Currency Field (Hidden) -->
-  <%= f.hidden_field :currency %>
-  <div class="field">
-    <%= f.label :bank_code %>
-    <%= f.text_field :bank_code, readonly: true %>
-  </div>
-  <div class="field">
-    <%= f.label :account_number %>
-    <%= f.text_field :account_number, readonly: true %>
-  </div>
-  <div class="field">
-    <%= f.label :customer_name %>
-    <%= f.text_field :customer_name, readonly: true %>
-  </div>
-  <div class="field">
-    <%= f.label :customer_email %>
-    <%= f.text_field :customer_email, readonly: true %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %>
-    <%= f.number_field :amount %>
-  </div>
-  <div>
-    <%= f.label :narration %>
-    <%= f.text_area :narration, required: true %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Create Payout" %>
-  </div>
-<% end %>
+<main class="form-container">
+  <header class="form-header">
+    <h2>Request Payout</h2>
+    <div class="icon-container">
+      <%= link_to users_path do %>
+        <%= image_tag("backArrow.png", size: "30x30", alt: "Back to Users", class: "back-icon") %>
+      <% end %>
+    </div>
+  </header>
+
+  <%= form_with model: @payout, local: true, class: "payment-form" do |f| %>
+    <!-- Reference Field (Hidden) -->
+    <%= f.hidden_field :reference %>
+    <!-- Currency Field (Hidden) -->
+    <%= f.hidden_field :currency %>
+
+    <!-- Bank Code -->
+    <div class="form-group">
+      <%= f.label :bank_code, "Bank Code" %>
+      <%= f.text_field :bank_code, readonly: true, class: "form-input" %>
+    </div>
+
+    <!-- Account Number -->
+    <div class="form-group">
+      <%= f.label :account_number, "Account Number" %>
+      <%= f.text_field :account_number, readonly: true, class: "form-input" %>
+    </div>
+
+    <!-- Customer Name -->
+    <div class="form-group">
+      <%= f.label :customer_name, "Customer Name" %>
+      <%= f.text_field :customer_name, readonly: true, class: "form-input" %>
+    </div>
+
+    <!-- Customer Email -->
+    <div class="form-group">
+      <%= f.label :customer_email, "Customer Email" %>
+      <%= f.text_field :customer_email, readonly: true, class: "form-input" %>
+    </div>
+
+    <!-- Amount -->
+    <div class="form-group">
+      <%= f.label :amount, "Amount" %>
+      <%= f.number_field :amount, required: true, class: "form-input" %>
+    </div>
+
+    <!-- Narration -->
+    <div class="form-group">
+      <%= f.label :narration, "Narration" %>
+      <%= f.text_area :narration, required: true, class: "form-textarea" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <%= f.submit "Create Payout", class: "form-submit-btn" %>
+    </div>
+  <% end %>
+</main>
