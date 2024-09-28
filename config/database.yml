@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: kora_flex_pay_production
-  username: kora_flex_pay
-  password: <%= ENV["KORA_FLEX_PAY_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
