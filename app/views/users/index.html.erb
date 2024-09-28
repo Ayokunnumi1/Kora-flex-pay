@@ -16,9 +16,19 @@
       <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-avatar") %>
     </div>
   </header>
-  <%= link_to 'Create New Payout', new_payout_path, class: 'btn btn-primary' %>
-  <div>Available Balance: <%= @user.available_balance %></div>
-  <div>Pending Withdraw: <%= @user.pending_withdraw %></div>
+  
+  
+  <div class="wallet-balance-container">
+  <div class="balance-card">
+    <h4>Wallet Balance</h4>
+    <p>GH₵<%= @user.available_balance %></p>
+  </div>
+  <div class="balance-card">
+    <h4>Pending Withdraw</h4>
+    <p>GH₵<%= @user.pending_withdraw %></p>
+  </div>
+</div>
+
   <!-- Dashboard Content -->
   <section class="dashboard-container">
     <!-- First Section: Navigation Icons -->
@@ -39,11 +49,13 @@
             <%= image_tag("customers.png", size: "40x40", alt: "Cardless Cash Icon") %>
           <% end %>
           <p>Customers</p>
-        </div>
+        </div>        
         <div class="icon">
-          <%= image_tag("income.png", size: "30x30", alt: "Income Icon") %>
-          <p>Income</p>
-        </div>
+          <%= link_to new_payout_path do %>
+            <%= image_tag("request.png", size: "40x40", alt: "Cardless Cash Icon") %>
+          <% end %>
+          <p>Request pay out</p>
+        </div>        
         <div class="icon">
           <%= image_tag("commission.png", size: "30x30", alt: "Commission Icon") %>
           <p>Commission</p>
@@ -57,23 +69,6 @@
           <p>Sign Out</p>
         </div>
       </div>
-    </section>
-    <!-- Second Section: Dashboard Summary Cards -->
-    <section class="second-section">
-      <div class="summary-cards">
-        <div class="summary-card">
-          <h3>Total Commission Received</h3>
-          <p class="amount">GH₵<%= number_to_currency(@total_amount, unit: '') %></p>
-        </div>
-        <div class="summary-card">
-          <h3>Total Commission Withdrawn</h3>
-          <p class="amount">GH₵<%= number_to_currency(@total_amount_withdrawn, unit: '') %></p>
-        </div>
-        <div class="summary-card">
-          <h3>Total Customers</h3>
-          <p class="total-customers"><%= @total_customers %></p>
-        </div>
-      </div>
-    </section>
+    </section>    
   </section>
 </main>
