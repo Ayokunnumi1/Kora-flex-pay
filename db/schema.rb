@@ -27,19 +27,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_135301) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "bank_transfers", force: :cascade do |t|
-    t.string "account_name"
-    t.decimal "amount"
-    t.string "currency"
-    t.string "reference"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "customer_name"
-    t.string "customer_email"
-    t.index ["user_id"], name: "index_bank_transfers_on_user_id"
-  end
-
   create_table "mobile_money_transactions", force: :cascade do |t|
     t.decimal "amount"
     t.string "currency"
@@ -92,7 +79,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_135301) do
     t.index ["unique_identifier"], name: "index_users_on_unique_identifier", unique: true
   end
 
-  add_foreign_key "bank_transfers", "users"
   add_foreign_key "payouts", "admins"
   add_foreign_key "payouts", "users"
 end
