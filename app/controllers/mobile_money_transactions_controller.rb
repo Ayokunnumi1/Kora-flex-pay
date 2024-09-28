@@ -1,6 +1,6 @@
 class MobileMoneyTransactionsController < ApplicationController
   def index
-    @mobile_money_transaction = current_user.mobile_money_transactions.all
+    @mobile_money_transaction = current_user.mobile_money_transactions.order(created_at: :desc)
 
     # Count the total unique customers
     @total_customers = MobileMoneyTransaction.select(:customer_name).distinct.count
