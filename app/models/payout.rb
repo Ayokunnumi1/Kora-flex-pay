@@ -2,6 +2,8 @@ class Payout < ApplicationRecord
   belongs_to :admin
   belongs_to :user
 
+  validates :amount, presence: true, numericality: { greater_than: 0 }
+
   after_create :update_user_balance
   after_update :deduct_pending_withdraw, if: :paid_changed_to_true?
 
