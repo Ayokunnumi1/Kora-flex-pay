@@ -21,7 +21,8 @@ body {
 .welcome-message {
   font-family: '  Roboto', sans-serif;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  color: #333;
 }
 
 .logo-container {
@@ -48,11 +49,6 @@ body {
 
 .user-info {
   margin-right: 0.5rem;
-}
-
-.welcome-message {
-  font-size: 1rem;
-  color: #333;
 }
 
 .user-avatar {
@@ -85,6 +81,36 @@ body {
   margin-top: 0.5rem;
   font-size: 0.85rem;
   color: #333;
+}
+
+/* Wallet Balance and Pending Withdraw Styles */
+.wallet-balance-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.balance-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.balance-card h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #4caf50;
+  /* Consistent with the navbar color */
+}
+
+.balance-card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  /* Dark color for contrast */
 }
 
 .summary-cards {
@@ -126,11 +152,10 @@ body {
   margin-bottom: 1rem;
 }
 
-h1 {
+h1,
+h2 {
   font-size: 1.5rem;
   color: #007bff;
-
-  /* Flex Pay's blue color */
 }
 
 .icon-container {
@@ -192,8 +217,6 @@ h1 {
 .form-submit-btn:hover {
   background-color: #0056b3;
 }
-
-/* Additional styles for the summary and transactions section */
 
 /* General layout adjustments for sections */
 .summary-section {
@@ -266,21 +289,6 @@ h2 {
   display: block;
 }
 
-/* Input styles reuse from previous form pages */
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: border-color 0.2s ease;
-}
-
-.form-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
 /* Remember me checkbox */
 .remember-me {
   display: flex;
@@ -290,23 +298,6 @@ h2 {
 
 .remember-me input {
   margin-right: 0.5rem;
-}
-
-/* Submit button reuses the same form submit button styles */
-.form-submit-btn {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.form-submit-btn:hover {
-  background-color: #0056b3;
 }
 
 /* Links (e.g., forgot password) */
@@ -332,52 +323,4 @@ h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   margin: 2rem auto;
-}
-
-/* Style the heading */
-h2 {
-  font-size: 1.75rem;
-  color: #007bff;
-
-  /* Flex Pay's blue color */
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-/* Reuse existing form field and button styles */
-.field label {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: border-color 0.2s ease;
-}
-
-.form-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.form-submit-btn {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.form-submit-btn:hover {
-  background-color: #0056b3;
 }
