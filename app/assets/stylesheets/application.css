@@ -595,7 +595,7 @@ h2 {
   }
 
   .agent-details-container {
-    padding: 15px;
+    padding: 5px;
   }
 
   .section-title {
@@ -604,10 +604,6 @@ h2 {
 
   .subsection-title {
     font-size: 18px;
-  }
-
-  .agent-details-container {
-    padding: 5px;
   }
 
   .payouts-table th,
