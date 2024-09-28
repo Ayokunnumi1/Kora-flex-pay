@@ -13,12 +13,11 @@
         <% end %>
       </div>
       <div class="admin-profile">
-        <p><strong>Welcome Admin </strong> <%= current_admin.name %></p>
+        <p><strong>Welcome </strong> <%= current_admin.name %></p>
         <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-icon") %>
       </div>
     </nav>
   </header>
-
   <div class="admin-dashboard">
     <aside class="admin-sidebar admin-first-section">
       <div class="sidebar-item">
@@ -37,11 +36,10 @@
       </div>
       <div class="sidebar-item">
         <div class="sidebar-item-content">
-        <%= image_tag("worker.png", size: "30x30", alt: "Worker Icon") %>
-        <strong>Worker</strong>
+          <%= image_tag("worker.png", size: "30x30", alt: "Worker Icon") %>
+          <strong>Worker</strong>
         </div>
         <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
-        
       </div>
       <div class="sidebar-item">
         <div class="sidebar-item-content">
@@ -58,7 +56,6 @@
         <%= image_tag("downward.png", size: "15x15", alt: "Downward Icon") %>
       </div>
     </aside>
-
     <main class="admin-content admin-second-section">
       <section class="dashboard-summary">
         <div class="admin-summary-card summary-card">
@@ -78,7 +75,6 @@
           <% end %>
         </div>
       </section>
-
       <section class="top-agents">
         <h3>Top Rated POS Agents</h3>
         <div class="agent-list">
@@ -88,7 +84,6 @@
           <%= image_tag("pos4.png",  alt: "POS Agent 4", class: "agent-icon") %>
         </div>
       </section>
-
       <section class="agent-transactions">
         <h2>Agent Transactions and Payout Management</h2>
         <% if @users_with_mobile_money_count.any? %>

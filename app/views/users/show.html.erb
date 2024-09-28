@@ -29,9 +29,13 @@
               <% end %>
             </td>
             <td><%= payout.currency %></td>
-            <td><%= payout.status %></td>
+            <td><%= payout.paid ? "Paid" : "Unpaid" %></td>
             <td><%= payout.created_at.strftime("%d %b %Y") %></td>
-            <td><%= link_to 'Activate Payout', edit_payout_path(payout), class: 'btn btn-primary' %></td>
+            <td>
+              <% if !payout.paid %>
+                <%= link_to 'Activate Payout', edit_payout_path(payout), class: 'btn btn-primary' %>
+              <%end%>
+            </td>
           </tr>
         <% end %>
       </tbody>
