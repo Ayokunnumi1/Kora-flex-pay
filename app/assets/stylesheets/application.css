@@ -606,6 +606,10 @@ h2 {
     font-size: 18px;
   }
 
+  .agent-details-container {
+    padding: 5px;
+  }
+
   .payouts-table th,
   .payouts-table td {
     padding: 8px;
