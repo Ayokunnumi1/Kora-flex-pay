@@ -45,6 +45,7 @@
   <summary>Client & Server</summary>
   <ul>
     <li><a href="https://rubyonrails.org/">Rails</a></li>
+    <li><a href="https://docs.korapay.com/">Kora Payment</a></li>
   </ul>
 </details>
 
@@ -116,6 +117,8 @@ Install this project with:
 To run the project, execute the following command:
 
 ```sh
+  rails db:migrate
+  rails db:seed
   rails server
 ```
 
@@ -131,7 +134,7 @@ To run the project, execute the following command:
 - Twitter: [Al Amin Khan Shakil](https://https://twitter.com/AlAminKhan85004)
 - LinkedIn: [Al Amin Khan Shakil](https://https://www.linkedin.com/in/al-amin-khan-shakil/)
 
-👤 **Ayokunnumi**
+👤 **Author2**
 
 - GitHub: [Ayokunnumi](https://github.com/Ayokunnumi1)
 - Twitter: [Ayokunnumi](https://twitter.com/AyokunnumiA)
