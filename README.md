@@ -82,7 +82,7 @@
 
 ## 🚀 Video Demo <a name="live-demo"></a>
 
-- [Live Video Link](https://docs.google.com/document/d/1tBjFiqFykoEUWECmJj8Wkio1ol3x_IH_Tcrdd3Q5XSw/edit?usp=sharing)
+- [Live Video Link](https://drive.google.com/file/d/1_iR3RATB00UBTJxE9xprN-PVIgYw2EUN/view?usp=sharing)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
