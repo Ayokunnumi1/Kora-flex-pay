@@ -1,0 +1,74 @@
+<main class="user-dashboard-container">
+  <!-- Navbar Section -->
+  <header class="navbar">
+    <div class="logo-container">
+      <%= image_tag("logo.png", size: "30x30", alt: "Flex Pay Logo", class: "logo-img") %>
+      <h2 class="logo-text">FlexPay</h2>
+    </div>
+    <div class="user-profile">
+      <div class="user-info">
+        <% if @user %>
+          <p class="welcome-message"><%= @user.first_name.slice(0, 3) %>!</p>
+        <% else %>
+          <p class="welcome-message">No user logged in</p>
+        <% end %>
+      </div>
+      <%= image_tag("user.png", size: "40x40", alt: "User", class: "user-avatar") %>
+    </div>
+  </header>
+  
+  
+  <div class="wallet-balance-container">
+  <div class="balance-card">
+    <h4>Wallet Balance</h4>
+    <p>GH₵<%= @user.available_balance %></p>
+  </div>
+  <div class="balance-card">
+    <h4>Pending Withdraw</h4>
+    <p>GH₵<%= @user.pending_withdraw %></p>
+  </div>
+</div>
+
+  <!-- Dashboard Content -->
+  <section class="dashboard-container">
+    <!-- First Section: Navigation Icons -->
+    <section class="first-section">
+      <div class="icon-grid">
+        <div class="icon">
+          <%= link_to new_mobile_money_transaction_path do %>
+            <%= image_tag("money.png", size: "40x40", alt: "Customers Icon") %>
+          <% end %>
+          <p>Cardless Cash</p>
+        </div>
+        <div class="icon">
+          <%= image_tag("kyc.png", size: "30x30", alt: "KYC Icon") %>
+          <p>Set up KYC</p>
+        </div>
+        <div class="icon">
+          <%= link_to mobile_money_transactions_path do %>
+            <%= image_tag("customers.png", size: "40x40", alt: "Cardless Cash Icon") %>
+          <% end %>
+          <p>Customers</p>
+        </div>        
+        <div class="icon">
+          <%= link_to new_payout_path do %>
+            <%= image_tag("request.png", size: "40x40", alt: "Cardless Cash Icon") %>
+          <% end %>
+          <p>Request pay out</p>
+        </div>        
+        <div class="icon">
+          <%= image_tag("commission.png", size: "30x30", alt: "Commission Icon") %>
+          <p>Commission</p>
+        </div>
+        <div class="icon">
+          <%= button_to image_tag("logout.png", size: "40x40", alt: "Logout Icon"),
+                        destroy_user_session_path,
+                        method: :delete,
+                        class: '',
+                        title: 'Sign Out' %>
+          <p>Sign Out</p>
+        </div>
+      </div>
+    </section>    
+  </section>
+</main>

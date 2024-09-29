@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KoraFlexPay</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <%= yield %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const amountInput = document.getElementById('amount-input');
+        const serviceChargeDisplay = document.getElementById('service-charge');
+
+        amountInput.addEventListener('input', function() {
+          const amount = parseFloat(amountInput.value);
+          if (!isNaN(amount)) {
+            const serviceCharge = amount * 1.05;
+            serviceChargeDisplay.textContent = `GH₵ ${serviceCharge.toFixed(2)}`;
+          } else {
+            serviceChargeDisplay.textContent = "Enter an amount";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
